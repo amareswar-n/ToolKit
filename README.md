@@ -48,7 +48,7 @@ Contributors names and contact info
 
 ## License
 
-This project is licensed under BEER-WARE License - see the LICENSE.md file for details
+This project is licensed under [**THE BREWSKI LICENSE**](https://github.com/amareswar-n/ToolKit/blob/master/LICENSE.md)
 
 ## Acknowledgments
 
