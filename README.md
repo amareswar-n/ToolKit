@@ -6,36 +6,15 @@ This repository contains all code snippets to simplify and also demonstate the u
 
 ## Getting Started
 
-### Dependencies
-
-* Describe any prerequisites, libraries, OS version, etc., needed before installing program.
-* ex. Windows 10
-
-### Installing
-
-* How/where to download your program
-* Any modifications needed to be made to files/folders
-
-### Executing program
-
-* How to run the program
-* Step-by-step bullets
-```
-code blocks for commands
-```
-
 ## Help
 
-Any advise for common problems or issues.
 ```
-command to run if program contains helper info
+each directory has a seperate readme of how to use the code snippet
 ```
 
 ## Authors
-
-Contributors names and contact info
- [@amareswar-n](https://twitter.com/amareswarn)
- [@amar-n](https://twitter.com/amareswarn)
+ - [@amareswar-n](https://twitter.com/amareswarn)
+ - [@amar-n](https://twitter.com/amareswarn)
 
 
 ## Version History
