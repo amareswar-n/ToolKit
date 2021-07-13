@@ -6,8 +6,6 @@ This repository contains all code snippets to simplify and also demonstate the u
 
 ## Getting Started
 
-## Help
-
 ```
 each directory has a seperate readme of how to use the code snippet
 ```
