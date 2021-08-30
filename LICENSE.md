@@ -1,5 +1,5 @@
 # THE BREWSKI LICENSE
-**Copyright&copy; &[YEAR]&lt2099  ** *except the author* @AmareswarN
+**Copyright&copy; § 2099 except for @amareswar-n
 
 Everyone is hereby granted the permission, **free of charge** to copy, modify, merge, publish, distribute, sublicense, and/or sell copies of this software and associated documentation files, subject to the following conditions at their **OWN RISK**:
 
