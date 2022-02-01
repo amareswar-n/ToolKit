@@ -4,6 +4,7 @@
 import os
 import sqlparse
 import yaml
+#import json
 from yaml.loader import SafeLoader
 
 
@@ -58,12 +59,48 @@ def loop_path(path):
     #print(" ".join(TableNames))
     print ( TableNames)
     
+def getparams(task, dataframe):
+    nowdf = ("ETL task", "Data Frame", "Table Name", "Filter", "URI", "Persist","","")
+    for key in dataframe:
+        table = Filter= uri = persist = ""
+        if key == "table":
+            table = dataframe[key]
+        elif key == "filter":
+            Filter = dataframe[key]
+        elif key == "uri":
+            uri = dataframe[key]
+        elif key == "persist":
+            persist = dataframe[key]
+        #hiveTable
+        #partitionBy
+        
+        nowdf = (task, dataframe["name"], table, Filter, uri, persist )
+    return (nowdf)            
+        
+            
+YmlFile = "/Volumes/MyDrive/src/main/resources/hl_al_ongoing.yaml"
+dataframes= []
+stream = open(YmlFile, 'r')
+pipeline = yaml.load(stream, Loader=SafeLoader)
 
-   
-#YmlFile = "/Volumes/MyDrive/src/main/resources/hl_al_ongoing.yaml"
+for etl in pipeline:
+    for key, value in etl.items():
+       # print ("------>" + key ) #+ " : " + str(value)
+        if key == "extract.hive" or key == "load.parquet" or  key == "transform.sql":
+            #print(" ETL TASK " ) #+ str(value ) )
+            for inp, dfs in value.items():
+                for dataframe in dfs: 
+                   thisdf = getparams(key, dataframe)
+                   dataframes.append(thisdf)
+                    #print(dataframe["name"]+ "|" + dataframe["table"] )# + "|" + dataframe["filter"])
+print(dataframes)
+        
+# else:
+          # print(" OTHER TASK")
+
+
 #YmlPath = "hl_al_ongoing.yaml"
-path="/Volumes/MyDrive/src/main/resources/sql/hl/"
-loop_path(path)
-
-
-
+#path="/Volumes/MyDrive/src/main/resources/sql/hl/"
+#loop_path(path)
+        #for token in pipeline:
+            #print(token)
