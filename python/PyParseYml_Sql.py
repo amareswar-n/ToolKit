@@ -32,11 +32,16 @@ def ParseSql(filePath):
                      #print(txt[txt.index("FROM")+1].upper())
                   elif "JOIN" in txt and txt.index("JOIN")+1 < len(txt):
                      #TblNames.append([filename, txt[txt.index("JOIN")+1].upper()])
-                     TblNames.append([ txt[txt.index("JOIN")+1].upper()])
+                     TblNames.append([txt[txt.index("JOIN")+1].upper()])
                      #print(txt[txt.index("JOIN")+1].upper())
               except Exception as e:
                   print(e)
         #print ( TblNames)
+        for Tbl in TblNames:
+           if len(str(Tbl)) <= 6:
+               #print(str(Tbl) + str(len(str(Tbl))))
+               TblNames.remove(Tbl)
+                
         return TblNames
               
 def write_to_excel(basePath, data):
@@ -45,14 +50,6 @@ def write_to_excel(basePath, data):
     df.to_excel(writer, sheet_name='welcome', index=False)
     writer.save()
     
-    
-    
-
-def write_to_csv(lst):
-   with open("/Users/amar/Desktop/001.csv", 'w') as csvfile:
-       for tbl in lst:
-           csvfile.write(tbl + '\n')   
-   csvfile.close()
 
 def loop_path(path):
     TableNames = []
@@ -91,9 +88,8 @@ def getparams(task, dataframe, basePath):
         #partitionBy
         if task == "transform.sql": 
             references = ParseSql(uri)
-           #print(references)
-           # print(uri)
-           # print(str(references))
+            if references is not None:
+                references = str(references).replace('[','').replace(']','').replace("'","").replace("(","").replace(")","").replace(",","\n")
         nowdf = (task, dataframe["name"], table, Filter, persist, uri, "".join(str(references)) )
     return (nowdf)            
         
@@ -117,3 +113,4 @@ for etl in pipeline:
                    dataframes.append(thisdf)
                     #print(dataframe["name"]+ "|" + dataframe["table"] )# + "|" + dataframe["filter"])
 write_to_excel(basePath, dataframes)
+print(dataframes[39])  
