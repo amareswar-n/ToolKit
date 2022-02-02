@@ -4,7 +4,7 @@
 import os
 import sqlparse
 import yaml
-#import json
+import pandas as pd
 from yaml.loader import SafeLoader
 
 
@@ -39,7 +39,14 @@ def ParseSql(filePath):
         #print ( TblNames)
         return TblNames
               
-
+def write_to_excel(basePath, data):
+    df = pd.DataFrame(data)
+    writer = pd.ExcelWriter('/Users/amar/Desktop/001.xlsx', engine='xlsxwriter')
+    df.to_excel(writer, sheet_name='welcome', index=False)
+    writer.save()
+    
+    
+    
 
 def write_to_csv(lst):
    with open("/Users/amar/Desktop/001.csv", 'w') as csvfile:
@@ -63,13 +70,18 @@ def loop_path(path):
     print ( TableNames)
     
 def getparams(task, dataframe, basePath):
-    nowdf = ("ETL task", "Data Frame", "Table Name", "Filter", "Persist","URI", "References","")
+   # nowdf = ("ETL task", "Data Frame", "Table Name", "Filter", "Persist","URI", "References","")
+    #print(dataframe)
+    table = Filter = uri = persist = references = ""
+    #print( "-----------------")
+    #print(dataframe["name"])
     for key in dataframe:
-        table = Filter= uri = persist = references = ""
         if key == "table":
             table = dataframe[key]
+            #print(table)
         elif key == "filter":
             Filter = dataframe[key]
+            #print(Filter)
         elif key == "uri":
             uri = basePath + dataframe[key]
             #print(uri)
@@ -79,9 +91,10 @@ def getparams(task, dataframe, basePath):
         #partitionBy
         if task == "transform.sql": 
             references = ParseSql(uri)
+           #print(references)
            # print(uri)
            # print(str(references))
-        nowdf = (task, dataframe["name"], table, Filter, persist, uri, str(references) )
+        nowdf = (task, dataframe["name"], table, Filter, persist, uri, "".join(str(references)) )
     return (nowdf)            
         
             
@@ -103,4 +116,4 @@ for etl in pipeline:
                    thisdf = getparams(key, dataframe, basePath)
                    dataframes.append(thisdf)
                     #print(dataframe["name"]+ "|" + dataframe["table"] )# + "|" + dataframe["filter"])
-print(dataframes)
+write_to_excel(basePath, dataframes)
