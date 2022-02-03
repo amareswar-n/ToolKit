@@ -41,13 +41,13 @@ def ParseSql(filePath):
            if len(str(Tbl)) <= 6:
                #print(str(Tbl) + str(len(str(Tbl))))
                TblNames.remove(Tbl)
-                
+
         return TblNames
               
 def write_to_excel(basePath, data):
     df = pd.DataFrame(data)
     writer = pd.ExcelWriter('/Users/amar/Desktop/001.xlsx', engine='xlsxwriter')
-    df.to_excel(writer, sheet_name='welcome', index=False)
+    df.to_excel(writer, sheet_name='welcome', index=False, header = None)
     writer.save()
     
 
@@ -62,8 +62,6 @@ def loop_path(path):
                 #print(filePath) 
                 TableNames.append(ParseSql(filePath))
 
-    #write_to_csv(TableNames)
-    #print(" ".join(TableNames))
     print ( TableNames)
     
 def getparams(task, dataframe, basePath):
@@ -90,9 +88,12 @@ def getparams(task, dataframe, basePath):
             references = ParseSql(uri)
             if references is not None:
                 references = str(references).replace('[','').replace(']','').replace("'","").replace("(","").replace(")","").replace(",","\n")
-        nowdf = (task, dataframe["name"], table, Filter, persist, uri, "".join(str(references)) )
+        nowdf = (task, dataframe["name"], table, Filter, persist, uri, "".join(str(references)), "" )
     return (nowdf)            
-        
+
+# def GetTableNames(dataframes):
+#     for df in dataframes:
+#       print(str(df[6]).)
             
 YmlFile = "/Volumes/MyDrive/src/main/resources/hl_al_ongoing.yaml"
 basePath = os.path.dirname(YmlFile)
@@ -101,6 +102,9 @@ basePath = os.path.dirname(YmlFile)
 dataframes= []
 stream = open(YmlFile, 'r')
 pipeline = yaml.load(stream, Loader=SafeLoader)
+header = ("ETL task", "Data Frame", "Table Name", "Filter", "Persist","URI", "Referenced Dataframes","Referenced Tables")
+
+dataframes.append(header)
 
 for etl in pipeline:
     for key, value in etl.items():
@@ -111,6 +115,6 @@ for etl in pipeline:
                 for dataframe in dfs: 
                    thisdf = getparams(key, dataframe, basePath)
                    dataframes.append(thisdf)
-                    #print(dataframe["name"]+ "|" + dataframe["table"] )# + "|" + dataframe["filter"])
-write_to_excel(basePath, dataframes)
-print(dataframes[39])  
+GetTableNames(dataframes)
+#write_to_excel(basePath, dataframes)
+#print(dataframes[39])  
